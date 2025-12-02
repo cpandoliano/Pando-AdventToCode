@@ -27,6 +27,11 @@ function InvalidIdPartTwo {
     return $invalidIdTotal
 }
 
+if ($args.Count -ne 1) {
+    Write-Host "Usage: $($MyInvocation.MyCommand.Name) <sample.txt | input.txt> for day2"
+    exit
+}
+
 $elfId = @()
 $lineCount = 0
 
@@ -69,6 +74,3 @@ for ($i = 0; $i -lt $lineCount; $i++) {
 
 Write-Host "Part 1 Invalid ID totals: $partOneInvalidIdTotal"
 Write-Host "Part 2 Invalid ID totals: $partTwoInvalidIdTotal"
-
-# find repeat
-
