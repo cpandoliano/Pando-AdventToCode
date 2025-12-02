@@ -6,8 +6,8 @@ if ($args.Count -ne 1) {
 $elfId = @()
 $lineCount = 0
 
-$startRange = 0
-$endRange = 0
+[int64]$startRange = 0
+[int64]$endRange = 0
 
 $invalidIdTotal = 0
 
@@ -29,7 +29,7 @@ $lineCount = $elfId.Count
 
 
 # loop the range
-for ($i = 0; $i -lt 1; $i++) {
+for ($i = 0; $i -lt $lineCount; $i++) {
     # set the startRange and endRange
     $startRange, $endRange = $elfId[$i].Split("-")
 
@@ -39,12 +39,13 @@ for ($i = 0; $i -lt 1; $i++) {
     }
 
     # function: $invalidId = findInvalidId -start $startRange -end $endRange
-    # $invalidIdTotal += $invalidId
-
-    for ($i = $startRange; i -le $endRange; $i++) {
-        
+    for ($j = $startRange; $j -le $endRange; $j++) {
+        if ($j -match "\b(\d+)\1\b") {
+            #Write-Host $j
+            # $invalidIdTotal += $invalidId
+            $invalidIdTotal += $j
+        }
     }
-    
     # Write-Host $startRange
     # Write-Host $endRange
 }
