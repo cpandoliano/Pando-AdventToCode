@@ -35,9 +35,6 @@ $partTwoInvalidIdTotal = 0
 # split the comma separated values
 Get-Content -Path $args[0] | ForEach-Object {
     $idNum = $_.Split(',') 
-    if ($idNum.Contains("\n")) {
-        continue
-    }
     $elfId += $idNum
 }
 
