@@ -1,49 +1,57 @@
+function GetBankMaxJoltage {
+    param(
+        [string]$bank
+    )
+    $tenth = 0
+    $oneth = 0
+    [string]$combine = ""
+    $index = 0 # of left most highest
+    $bankMaxJoltage = 0
+
+    # Get the tenth value
+    for ($j = 0; $j -lt $bank.Length - 1; $j++) {
+        if ($tenth -eq '9') {
+            break;
+        }
+        if ($bank[$j] -eq '9') {
+            $tenth = $bank[$j]
+            $index = $j
+        }
+        elseif ($bank[$j] -gt $tenth) {
+            $tenth = $bank[$j]
+            $index = $j
+        }
+    }
+    # Get the oneth value
+    for ($h = $index + 1; $h -lt $bank.Length; $h++) {
+        if ($bank[$h] -eq '9') {
+            $oneth = $bank[$h]
+        }
+        elseif ($bank[$h] -gt $oneth) {
+            $oneth = $bank[$h]
+        }
+    }
+
+    $combine = $tenth + $oneth
+    $bankMaxJoltage = [System.Int32]::Parse($combine)
+
+    return $bankMaxJoltage
+}
+
 if ($args.Count -ne 1) {
-    Write-Host "Usage: $($MyInvocation.MyCommand.Name) <sample.txt | input.txt> for day2"
+    Write-Host "Usage: $($MyInvocation.MyCommand.Name) <sample.txt | input.txt> for day3"
     exit
 }
 
-$bunchOfBanks = @() # [222, 222, 222,]
-$totalMaxJoltage = 0
-
-$tenth = 0
-$oneth = 0
-# read in file input into array of bunchOfBanks
-
-# split each bank [2,2,2]
-
-# find the two highest numbers as close to 99 as possible
-# function FindHighestBankJoltage -> [int]maxJoltage
-# loop through each bank find the two highest tenth decimal and oneth decimal
-# add them together totalMaxJoltage
-
-
+$bunchOfBanks = @()
 $bunchOfBanks = Get-Content -Path $args[0]
 
-# TODO: need to make the strings into numbers
-# TODO: the logic isn't right
+$totalOutputJoltage = 0
+$bankJoltage = 0
+
 for ($i = 0; $i -lt $bunchOfBanks.Count; $i++) {
-    # Write-Host $($bunchOfBanks[$i])
-    for ($j = 0; $j -lt 1; $j++) { #$bunchOfBanks[$i]
-        # Write-Host $($bunchOfBanks[$i][$j])
-        # first number checks if higher than tenth, unless tenth is 9
-        #if ($bunchOfBanks[$i][$j] -gt $tenth ?  $tenth = $bunchOfBanks[$i][$j] :  )
-        if ($bunchOfBanks[$i][$j] -gt $tenth) {
-            
-            # first number goes into the $tenth spot
-            $tenth = $bunchOfBanks[$i][$j]
-        }
-        else{
-            $oneth = $bunchOfBanks[$i][$j]
-        }
-        Write-Host "$tenth $oneth"
-
-        
-        # second number checks if higher than the tenth spot, unless tenth is 9
-        
-        # if tenth is already 9, second number goes into oneth
-        # repeat filling in tenth and oneth, unless they are already both 9
-    }
-    # Write-Host "$([int]$tenth + [int]$oneth)"
-
+    $bankJoltage = GetBankMaxJoltage -bank $bunchOfBanks[$i]
+    $totalOutputJoltage += $bankJoltage
 }
+
+Write-Host "Total Maximum Joltage Possible: $totalOutputJoltage"
