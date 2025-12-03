@@ -20,6 +20,8 @@ $oneth = 0
 
 $bunchOfBanks = Get-Content -Path $args[0]
 
+# TODO: need to make the strings into numbers
+# TODO: the logic isn't right
 for ($i = 0; $i -lt $bunchOfBanks.Count; $i++) {
     # Write-Host $($bunchOfBanks[$i])
     for ($j = 0; $j -lt 1; $j++) { #$bunchOfBanks[$i]
@@ -34,13 +36,14 @@ for ($i = 0; $i -lt $bunchOfBanks.Count; $i++) {
         else{
             $oneth = $bunchOfBanks[$i][$j]
         }
-        Write-Host $($tenth)
+        Write-Host "$tenth $oneth"
+
         
         # second number checks if higher than the tenth spot, unless tenth is 9
         
         # if tenth is already 9, second number goes into oneth
         # repeat filling in tenth and oneth, unless they are already both 9
     }
-    Write-Host "$($tenth + $oneth + $tenth + $oneth)"
+    # Write-Host "$([int]$tenth + [int]$oneth)"
 
 }
