@@ -49,20 +49,29 @@ foreach($range in $ingredientRange) {
 }
 #Write-Host $fresh
 
-$freshIdHashSet = [System.Collections.Generic.HashSet[System.Int64]]::new()
-[System.Int64]$freshIds = 0
-foreach($range in $ingredientRange) {
-    $start, $end = $range.Split("-")
-    $start = $start -as [System.Int64]
-    $end = $end -as [System.Int64]
-    #foreach($x in $start..$end) {
-    for ($x = $start; $x -le $end; $x++) {
-        #if ($id -ge $start -and $id -le $end) {
-        if ($freshIdHashSet.Add($x) -eq "True") {
-            Write-Host $x
-            $freshIds += 1
-        }
-    }
+# $freshIdHashSet = [System.Collections.Generic.HashSet[System.Int64]]::new()
+# [System.Int64]$freshIds = 0
+# foreach($range in $ingredientRange) {
+#     $start, $end = $range.Split("-")
+#     $start = $start -as [System.Int64]
+#     $end = $end -as [System.Int64]
+#     #foreach($x in $start..$end) {
+#     for ($x = $start; $x -le $end; $x++) {
+#         #if ($id -ge $start -and $id -le $end) {
+#         if ($freshIdHashSet.Add($x) -eq "True") {
+#             Write-Host $x
+#             $freshIds += 1
+#         }
+#     }
+# }
+
+$sortedRanges = $ingredientRange | Sort-Object
+foreach ($combo in $sortedRanges) {
+    Write-Host "$combo `n"
 }
-Write-Host $freshIds
+#Write-Host $($ingredientRange | Sort-Object)
 #$freshIdHashSet
+# put ranges into an array that holds pscustomobject with a $low $high, then sort that
+# keep track of $low and $high numbers as $currentLow $currentHigh
+# then $high - $low + 1 to get the number total Ids
+
